@@ -73,3 +73,55 @@ This line will execute the script located at /path/to/mysql_backup.sh every day 
 Make sure to replace `/path/to/mysql_gcloud_backup.sh` with the actual path to your script. You can adjust the timing by modifying the cron schedule according to your preferences.
 
 After saving the crontab file, cron will automatically execute the script at the specified intervals.
+
+## Script: Certificate Expiry Checker
+
+`sh/cert_expiry_checker.sh`
+
+### Description
+This script automates the process of checking the expiry date of SSL certificates stored in a specified directory. It alerts the administrator when a certificate is close to expiry, allowing for timely renewal or intervention.
+
+### Usage
+1. Ensure OpenSSL is installed on your system.
+2. Customize the `cert_dir` variable in the script to point to the directory where your SSL certificate files are stored.
+3. Set the `days_before_expiry` variable to specify how many days before expiry you want to trigger an alert.
+4. If you want to receive email alerts, ensure that your system is configured to send emails and adjust the `alert` function in the script with your email settings.
+5. Run the script using the following command:
+```bash
+   bash cert_expiry_checker.sh
+```
+
+6. Review the output to identify certificates that are close to expiry.
+7. Optionally, schedule the script to run periodically using a cron job for regular monitoring.
+
+### Email Alerts Setup
+To receive email alerts for certificates close to expiry, follow these steps:
+
+1. Ensure your system is configured to send emails. You may need to install and configure a mail server such as Postfix or use an SMTP relay service.
+2. Customize the alert function in the script with your email settings:
+- Replace `admin@example.com` with your email address.
+- Adjust the subject and message body as needed.
+3. Save the changes to the script.
+4. Test the email functionality by running the script and verifying that you receive email alerts for certificates close to expiry.
+5. Optionally, schedule the script to run periodically using a cron job to automate certificate expiry monitoring.
+
+
+### Cron Job Example
+You can schedule the script to run automatically at regular intervals using cron. Here's an example of how to set up a cron job to run the script daily at midnight:
+
+```bash
+# Edit your crontab file
+crontab -e
+```
+
+Then add the following line to schedule the script to run daily at midnight:
+
+```bash
+0 0 * * * /path/to/cert_expiry_checker.sh >> /var/log/cert_expiry_checker.log 2>&1
+```
+
+This line will execute the script located at `/path/to/cert_expiry_checker.sh` every day at midnight. The output of the script will be appended to the log file `/var/log/cert_expiry_checker.log`, including both standard output and standard error.
+
+Make sure to replace `/path/to/cert_expiry_checker.sh` with the actual path to your script. You can adjust the timing by modifying the cron schedule according to your preferences.
+
+After saving the crontab file, cron will automatically execute the script at the specified intervals.
