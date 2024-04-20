@@ -68,7 +68,7 @@ Then add the following line to schedule the script to run daily at midnight:
 0 0 * * * /path/to/mysql_gcloud_backup.sh >> /var/log/mysql_backup.log 2>&1
 ```
 
-This line will execute the script located at /path/to/mysql_backup.sh every day at midnight. The output of the script will be appended to the log file /var/log/mysql_backup.log, including both standard output and standard error.
+This line will execute the script located at `/path/to/mysql_backup.sh` every day at midnight. The output of the script will be appended to the log file /var/log/mysql_backup.log, including both standard output and standard error.
 
 Make sure to replace `/path/to/mysql_gcloud_backup.sh` with the actual path to your script. You can adjust the timing by modifying the cron schedule according to your preferences.
 
