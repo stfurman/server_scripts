@@ -10,21 +10,25 @@ DATE=`date +%Y-%m-%d_%H%M`
 LOCAL_BACKUP_DIR="/tmp"
 
 # Database credentials
+DB_HOST=""
 DB_NAME=""
 DB_USER=""
 DB_PASSWORD=""
 
+BUCKET_NAME=""
+
 echo "$(date): Starting backup process"
 
-mysqldump -u $DB_USER -p$DB_PASSWORD --skip-lock-tables $DB_NAME | gzip  > $LOCAL_BACKUP_DIR/$DATE-$DB_NAME.sql.gz
+mysqldump -h $DB_HOST -u $DB_USER -p$DB_PASSWORD --skip-lock-tables $DB_NAME | gzip  > $LOCAL_BACKUP_DIR/$DATE-$DB_NAME.sql.gz
 
 echo "$(date): Database backup file successfully created"
 
 echo "$(date): Uploading to the cloud"
 
-gsutil cp $LOCAL_BACKUP_DIR/$DATE-$DB_NAME.sql.gz gs://techiejobs-backup
+# Upload the backup file to Google Cloud Storage
+gsutil cp $LOCAL_BACKUP_DIR/$DATE-$DB_NAME.sql.gz gs://$BUCKET_NAME
 
-echo "Backup file uploaded to google cloud"
+echo "Backup file uploaded to Google cloud"
 
 rm $LOCAL_BACKUP_DIR/$DATE-$DB_NAME.sql.gz
 
